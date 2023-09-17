@@ -1,0 +1,86 @@
+<div class="parent-container">
+  <div class="container" [class.mat-elevation-z8]="true">
+    <mat-label class="title-label"
+      >Welcome to <span class="bold">Weather API!</span></mat-label
+    >
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="form">
+      <mat-form-field class="full-width">
+        <mat-label>First Name</mat-label>
+        <input
+          required="true"
+          matInput
+          type="text"
+          placeholder="Enter your Fist Name here..."
+          formControlName="fistName"
+        />
+        <mat-error *ngIf="isEmpty('firstName')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Last Name</mat-label>
+        <input
+          required="true"
+          matInput
+          type="text"
+          placeholder="Enter your Last Name here..."
+          formControlName="lastName"
+        />
+        <mat-error *ngIf="isEmpty('lastName')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          required="true"
+          matInput
+          type="email"
+          placeholder="Enter your Email here..."
+          formControlName="email"
+        />
+        <mat-error *ngIf="isEmailValid">
+          Invalid email.
+        </mat-error>
+        <mat-error *ngIf="isEmpty('email')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          required="true"
+          matInput
+          type="password"
+          placeholder="Enter your Password here..."
+          formControlName="password"
+        />
+        <mat-error *ngIf="isEmpty('password')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button
+          class="button"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          (click)="onSubmit()"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <div class="sing-up-container">
+        <p>
+          Already have an account?
+          <a mat-button color="primary" [routerLink]="['/']">Sign In here.</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

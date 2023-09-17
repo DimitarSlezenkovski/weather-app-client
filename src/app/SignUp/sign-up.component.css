@@ -1,0 +1,44 @@
+.parent-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.title-label {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    max-width: 40vw;
+    height: 50vh;
+    max-height: 50vh;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.full-width {
+    width: 300px;
+    max-width: 300px;
+}
+
+.button {
+    width: 300px;
+}
