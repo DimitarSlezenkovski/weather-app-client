@@ -30,7 +30,7 @@ export class SignUpComponent implements OnInit {
   success: boolean = true;
 
   signUpForm = new FormGroup({
-    fistName: new FormControl(''),
+    firstName: new FormControl(''),
     lastName: new FormControl(''),
     email: new FormControl('', [
       Validators.required,
@@ -44,11 +44,12 @@ export class SignUpComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log("works", this.signUpForm.controls['firstName'])
     const registerRequest: IRegisterRequest = {
-      firstName: this.signUpForm.get('firstName').getRawValue(),
-      lastName: this.signUpForm.get('lastName').getRawValue(),
-      email: this.signUpForm.get('email').getRawValue(),
-      password: this.signUpForm.get('password').getRawValue()
+      firstName: this.signUpForm.controls['firstName'].value,
+      lastName: this.signUpForm.controls['lastName'].value,
+      email: this.signUpForm.controls['email'].value,
+      password: this.signUpForm.controls['password'].value
     }
     this.authFacade.register(registerRequest)
     let success = false;
