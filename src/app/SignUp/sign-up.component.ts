@@ -5,12 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthFacade } from 'src/facades/AuthFacade';
+import { IRegisterRequest } from 'src/interfaces/IRegisterRequest';
 
 @Component({
   selector: 'sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+  templateUrl: './sign-up.template.html',
+  styleUrls: ['./sign-up.styles.css'],
   standalone: true,
   imports: [
     MatInputModule,
@@ -23,6 +25,10 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class SignUpComponent implements OnInit {
+
+  message: string = "";
+  success: boolean = true;
+
   signUpForm = new FormGroup({
     fistName: new FormControl(''),
     lastName: new FormControl(''),
@@ -33,7 +39,31 @@ export class SignUpComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  onSubmit(): void {}
+  constructor(private authFacade: AuthFacade, private router: Router) {
+
+  }
+
+  onSubmit(): void {
+    const registerRequest: IRegisterRequest = {
+      firstName: this.signUpForm.get('firstName').getRawValue(),
+      lastName: this.signUpForm.get('lastName').getRawValue(),
+      email: this.signUpForm.get('email').getRawValue(),
+      password: this.signUpForm.get('password').getRawValue()
+    }
+    this.authFacade.register(registerRequest)
+    let success = false;
+    this.authFacade.isRegisterSuccessful().subscribe(res => {
+      success = res
+    }).unsubscribe()
+    if (success) {
+      this.router.navigateByUrl('/register-confirmed')
+    } else {
+      this.authFacade.getRegisterMessage().subscribe(res => {
+        this.message = res
+        this.success = false;
+      });
+    }
+  }
 
   get isEmailValid() {
     return this.signUpForm.get('email').invalid;

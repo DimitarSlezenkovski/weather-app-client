@@ -1,0 +1,21 @@
+.card {
+  width: 200px !important;
+  height: 200px !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  padding: 10px !important;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+.mat-grid-list {
+  width: 65vw;
+  max-width: 65vw;
+}

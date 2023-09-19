@@ -5,12 +5,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthFacade } from 'src/facades/AuthFacade';
+import { ILoginRequest } from 'src/interfaces/ILoginRequest';
 
 @Component({
   selector: 'sign-in',
-  templateUrl: './sign-in.component.html',
-  styleUrls: ['./sign-in.component.css'],
+  templateUrl: './sign-in.template.html',
+  styleUrls: ['./sign-in.styles.css'],
   standalone: true,
   imports: [
     MatInputModule,
@@ -19,7 +21,7 @@ import { RouterModule } from '@angular/router';
     ReactiveFormsModule,
     MatButtonModule,
     CommonModule,
-    RouterModule
+    RouterModule,
   ],
 })
 export class SignInComponent implements OnInit {
@@ -31,7 +33,20 @@ export class SignInComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  onSubmit(): void {}
+  constructor(private authFacade: AuthFacade, private router: Router) {
+    
+  }
+
+  onSubmit(): void {
+    const loginRequest: ILoginRequest = {
+      email: this.signInForm.get('email').getRawValue(),
+      password: this.signInForm.get('password').getRawValue()
+    }
+    this.authFacade.login(loginRequest)
+    if (this.authFacade.isLoggedIn()) {
+      this.router.navigateByUrl('/weather-forecast')
+    }
+  }
 
   get isEmailValid() {
     return this.signInForm.get('email').invalid;

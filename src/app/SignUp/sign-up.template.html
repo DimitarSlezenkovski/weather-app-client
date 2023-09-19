@@ -41,9 +41,7 @@
           placeholder="Enter your Email here..."
           formControlName="email"
         />
-        <mat-error *ngIf="isEmailValid">
-          Invalid email.
-        </mat-error>
+        <mat-error *ngIf="isEmailValid"> Invalid email. </mat-error>
         <mat-error *ngIf="isEmpty('email')">
           This field is required.
         </mat-error>
@@ -62,6 +60,8 @@
           This field is required.
         </mat-error>
       </mat-form-field>
+
+      <mat-error *ngIf="!success"> {{message}} </mat-error>
 
       <div class="button-container">
         <button

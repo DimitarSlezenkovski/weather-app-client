@@ -1,0 +1,21 @@
+<div class="container">
+  <form [formGroup]="searchByCity" (ngSubmit)="onSubmit()" class="form">
+    <mat-form-field class="full-width">
+      <mat-label>Searh by city</mat-label>
+      <input
+        required="true"
+        matInput
+        type="search"
+        placeholder="Enter the name of the city here..."
+        formControlName="city"
+      />
+      <mat-error *ngIf="isEmpty('city')"> You must enter a name </mat-error>
+      <mat-error class="info" *ngIf="isCityFound">NotFound</mat-error>
+    </mat-form-field>
+    <span class="search-btn">
+      <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+        <mat-icon>search</mat-icon>
+      </button>
+    </span>
+  </form>
+</div>
