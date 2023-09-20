@@ -62,6 +62,7 @@ export class SignUpComponent implements OnInit {
       this.authFacade.getRegisterMessage().subscribe(res => {
         this.message = res
         this.success = false;
+        this.router.navigateByUrl('/signup')
       });
     }
   }

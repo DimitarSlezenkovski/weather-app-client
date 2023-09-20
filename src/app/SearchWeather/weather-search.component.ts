@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { WeatherForecastFacade } from 'src/facades/WeatherForecastFacade';
 
 @Component({
   selector: 'weather-search',
@@ -29,14 +30,24 @@ export class WeatherSearchComponent implements OnInit {
     city: new FormControl('', [Validators.required]),
   });
 
-  onSubmit(): void {}
+  isCityFound$: boolean = true;
+
+  constructor(private weatherForecastFacade: WeatherForecastFacade) {}
+
+  onSubmit(): void {
+    const city = this.searchByCity.controls['city'].value;
+    this.weatherForecastFacade.getWeatherForecastByCity(city);
+    this.weatherForecastFacade.isSuccessful().subscribe(res => {
+      this.isCityFound$ = res
+    })
+  }
 
   get isCityFound() {
-    return false;
+    return this.isCityFound$;
   }
 
   public isEmpty(field: string): boolean {
-    return this.searchByCity.get(field)?.getRawValue() === '';
+    return this.searchByCity.controls[field].value === '';
   }
 
   ngOnInit(): void {}

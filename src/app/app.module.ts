@@ -14,6 +14,7 @@ import { AuthFacade } from 'src/facades/AuthFacade';
 import { CoreModule } from 'src/core/core.module';
 import { WeatherSearchComponent } from './SearchWeather/weather-search.component';
 import { NavbarComponent } from './Navbar/navbar.component';
+import { WeatherForecastApiClient } from 'src/core/api/WeatherForecastApiClient';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,8 @@ import { NavbarComponent } from './Navbar/navbar.component';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthClientApi,
-    AuthFacade
+    AuthFacade,
+    WeatherForecastApiClient
   ],
   bootstrap: [AppComponent],
 })

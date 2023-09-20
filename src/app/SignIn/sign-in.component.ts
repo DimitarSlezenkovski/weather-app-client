@@ -26,26 +26,28 @@ import { ILoginRequest } from 'src/interfaces/ILoginRequest';
 })
 export class SignInComponent implements OnInit {
   signInForm = new FormGroup({
-    email: new FormControl('',[
+    email: new FormControl('', [
       Validators.required,
       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
     ]),
     password: new FormControl(''),
   });
 
-  constructor(private authFacade: AuthFacade, private router: Router) {
-    
-  }
+  constructor(private authFacade: AuthFacade, private router: Router) {}
 
   onSubmit(): void {
     const loginRequest: ILoginRequest = {
-      email: this.signInForm.get('email').getRawValue(),
-      password: this.signInForm.get('password').getRawValue()
-    }
-    this.authFacade.login(loginRequest)
-    if (this.authFacade.isLoggedIn()) {
-      this.router.navigateByUrl('/weather-forecast')
-    }
+      email: this.signInForm.controls['email'].value,
+      password: this.signInForm.controls['password'].value,
+    };
+    this.authFacade.login(loginRequest);
+    this.authFacade.isLoggedIn().subscribe((res) => {
+      if (res) {
+        this.router.navigateByUrl('/weather-forecast');
+      } else {
+        this.router.navigateByUrl('/')
+      }
+    });
   }
 
   get isEmailValid() {
@@ -60,6 +62,5 @@ export class SignInComponent implements OnInit {
     return this.signInForm.get(field)?.getRawValue() === '';
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }
